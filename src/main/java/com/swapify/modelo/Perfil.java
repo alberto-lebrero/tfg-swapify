@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 public class Perfil {
       @Id
-      @Column(nullable = false)
+      @Column(nullable = false, unique = true)
       private String nif;
       private String nombre;
       private String primerApellido;

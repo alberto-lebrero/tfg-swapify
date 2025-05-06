@@ -1,8 +1,11 @@
 package com.swapify.persistencia;
 
 import com.swapify.modelo.Imagen;
-import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ImagenJPADAO extends JPADAO<Imagen, Long>{
-      public ImagenJPADAO(EntityManager em) { super(em, Imagen.class); }
+      public ImagenJPADAO() {
+            super(Imagen.class);
+      }
 }

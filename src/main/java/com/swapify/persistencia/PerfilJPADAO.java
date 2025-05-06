@@ -1,10 +1,11 @@
 package com.swapify.persistencia;
 
-import jakarta.persistence.EntityManager;
 import com.swapify.modelo.Perfil;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class PerfilJPADAO extends JPADAO<Perfil, String> {
-      public PerfilJPADAO(EntityManager em) {
-            super(em, Perfil.class);
+      public PerfilJPADAO() {
+            super(Perfil.class);
       }
 }

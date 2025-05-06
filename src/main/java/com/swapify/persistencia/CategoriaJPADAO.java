@@ -1,8 +1,11 @@
 package com.swapify.persistencia;
 
 import com.swapify.modelo.Categoria;
-import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class CategoriaJPADAO extends JPADAO<Categoria, Long> {
-      public CategoriaJPADAO(EntityManager em){ super(em, Categoria.class); }
+      public CategoriaJPADAO(){
+            super(Categoria.class);
+      }
 }

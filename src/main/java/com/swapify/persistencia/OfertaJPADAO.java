@@ -1,11 +1,11 @@
 package com.swapify.persistencia;
 
 import com.swapify.modelo.Oferta;
-import com.swapify.modelo.Perfil;
-import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class OfertaJPADAO extends JPADAO<Oferta, Long> {
-      public OfertaJPADAO(EntityManager em) {
-            super(em, Oferta.class);
+      public OfertaJPADAO() {
+            super(Oferta.class);
       }
 }
