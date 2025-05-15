@@ -3,17 +3,21 @@ package com.swapify.modelo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.OneToOne;
+
+import lombok.*;
 
 @Entity
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class Perfil {
       @Id
       @Column(nullable = false, unique = true)
+      @Setter(AccessLevel.NONE)
       private String nif;
+
       private String nombre;
       private String primerApellido;
       private String segundoApellido;
@@ -24,5 +28,6 @@ public class Perfil {
       private String codigoPostal;
       private String pais;
 
-      public Perfil() {}
+      @OneToOne(mappedBy = "perfil")
+      private Usuario usuario;
 }

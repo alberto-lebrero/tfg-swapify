@@ -5,6 +5,14 @@ import java.util.List;
 public interface DAO<T, K> {
 
       /**
+       * Añade un nuevo elemento a los almacenados
+       *
+       * @param e elemento a crear
+       * @throws DAOException si no se ha podido realizar la operación
+       */
+      T crear(T e);
+
+      /**
        * Devuelve el elemento con el código dado
        *
        * @param id código del elemento a obtener
@@ -18,14 +26,6 @@ public interface DAO<T, K> {
        * @return lista de elementos
        */
       List<T> encontrarTodos();
-
-      /**
-       * Añade un nuevo elemento a los almacenados
-       *
-       * @param e elemento a crear
-       * @throws DAOException si no se ha podido realizar la operación
-       */
-      T crear(T e);
 
       /**
        * Actualiza un elemento de los almacenados
