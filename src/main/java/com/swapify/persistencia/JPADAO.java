@@ -31,7 +31,7 @@ public abstract class JPADAO<T,K> implements DAO<T,K> {
        * @throws EntityExistsException
        */
       @Override
-      public T crear(T e) throws EntityExistsException {
+      public T create(T e) throws EntityExistsException {
             em.persist(e);
             em.flush();
             em.refresh(e);
@@ -41,23 +41,23 @@ public abstract class JPADAO<T,K> implements DAO<T,K> {
 
       @Override
       @Transactional(readOnly = true)
-      public T encontrar(K id) {
+      public T find(K id) {
             return em.find(clazz, id);
       }
 
       @Override
       @Transactional(readOnly = true)
-      public List<T> encontrarTodos() {
+      public List<T> findAll() {
             return em.createQuery("SELECT e FROM " + clazz.getSimpleName() + " e", clazz).getResultList();
       }
 
       @Override
-      public T actualizar(T e) {
+      public T update(T e) {
             return em.merge(e);
       }
 
       @Override
-      public void borrar(T e) {
+      public void delete(T e) {
             em.remove(em.contains(e) ? e : em.merge(e)); // Elimino el elemento asegurando que esté gestionado por el EntityManager
             em.flush(); //Sincronizo con la BBDD inmeditamente depués de eliminar el elemento
       }

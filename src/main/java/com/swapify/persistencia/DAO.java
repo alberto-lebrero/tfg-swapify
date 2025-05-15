@@ -10,7 +10,7 @@ public interface DAO<T, K> {
        * @param e elemento a crear
        * @throws DAOException si no se ha podido realizar la operación
        */
-      T crear(T e);
+      T create(T e);
 
       /**
        * Devuelve el elemento con el código dado
@@ -18,14 +18,14 @@ public interface DAO<T, K> {
        * @param id código del elemento a obtener
        * @return elemento indicado o null si no existe
        */
-      T encontrar(K id);
+      T find(K id);
 
       /**
        * Devuelve una lista con todos los elementos almacenados
        *
        * @return lista de elementos
        */
-      List<T> encontrarTodos();
+      List<T> findAll();
 
       /**
        * Actualiza un elemento de los almacenados
@@ -33,7 +33,7 @@ public interface DAO<T, K> {
        * @param e elemento a guardar
        * @throws DAOException si no se ha podido realizar la operación
        */
-      T actualizar(T e);
+      T update(T e);
 
       /**
        * Borra el elemento indicado de los elementos almacenados
@@ -41,5 +41,5 @@ public interface DAO<T, K> {
        * @param e elemento a borrar
        * @throws DAOException si no se ha podido realizar la operación
        */
-      void borrar(T e);
+      void delete(T e);
 }
