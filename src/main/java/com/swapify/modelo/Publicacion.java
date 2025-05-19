@@ -35,8 +35,8 @@ public abstract class Publicacion {
       @JoinColumn(name = "fk_categoria_id", nullable = false)
       private Categoria categoria;
 
-      @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-      private List<Oferta> ofertas = new ArrayList<>();
+      @OneToMany(mappedBy = "publicaciones", cascade = CascadeType.ALL, orphanRemoval = true)
+      private List<Oferta> ofertas;
 
       @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
       private List<Imagen> imagenes = new ArrayList<>();

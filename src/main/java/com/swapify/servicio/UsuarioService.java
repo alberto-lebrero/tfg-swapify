@@ -39,4 +39,12 @@ public class UsuarioService {
       public void eliminarUsuario(Usuario usuarioAEliminar) {
             usuarioJPADAO.delete(usuarioAEliminar);
       }
+
+      public Usuario autenticar(String email, String contrasenna) {
+            Usuario usuario = usuarioJPADAO.obtenerUsuarioPor(email);
+            if(usuario != null && usuario.getContrasenna().equals(contrasenna)) {
+                  return usuario;
+            }
+            return null;
+      }
 }

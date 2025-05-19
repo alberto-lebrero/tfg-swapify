@@ -1,0 +1,11 @@
+<footer th:fragment="footer" class="bg-white border-t mt-24">
+    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        &copy; <span id="actual-year"></span> Swapify. Todos los derechos reservados.
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const actualYear = new Date().getFullYear();
+            document.getElementById("actual-year").textContent = actualYear;
+        });
+    </script>
+</footer>
