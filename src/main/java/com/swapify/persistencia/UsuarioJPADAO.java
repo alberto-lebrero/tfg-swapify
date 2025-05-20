@@ -5,7 +5,7 @@ import jakarta.persistence.NoResultException;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UsuarioJPADAO extends JPADAO<Usuario, String> {
+public class UsuarioJPADAO extends JPADAO<Usuario, Long> {
 
       public UsuarioJPADAO() {
             super(Usuario.class);

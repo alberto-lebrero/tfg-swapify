@@ -23,7 +23,7 @@ public class UsuarioService {
       }
 
       @Transactional(readOnly = true)
-      public Usuario encontrarUsuario(String id) {
+      public Usuario encontrarUsuario(Long id) {
             return usuarioJPADAO.find(id);
       }
 

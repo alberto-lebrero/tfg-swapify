@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UsuarioController {
@@ -54,7 +55,14 @@ public class UsuarioController {
       }
 
       @PostMapping("/register")
-      public String registrarUsuario(@ModelAttribute Usuario usuario, Model modelo) throws DAOException {
+      public String registrarUsuario(@ModelAttribute Usuario usuario,
+                                     @RequestParam("confirmacionContrasenna") String confirmacionContrasenna,
+                                     Model modelo) throws DAOException {
+
+            if(!usuario.getContrasenna().equals(confirmacionContrasenna)){
+                  modelo.addAttribute("error", "Las contraseñas no coinciden");
+                  return "register";
+            }
             usuarioService.crearUsuario(usuario);
             return "redirect:/login";
       }

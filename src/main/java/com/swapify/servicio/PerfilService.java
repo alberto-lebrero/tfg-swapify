@@ -22,7 +22,7 @@ public class PerfilService {
       }
 
       @Transactional(readOnly = true)
-      public Perfil encontrarPerfil(String id) {
+      public Perfil encontrarPerfil(Long id) {
             return perfilJPADAO.find(id);
       }
 

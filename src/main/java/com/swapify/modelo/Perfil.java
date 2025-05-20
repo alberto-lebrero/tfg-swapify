@@ -1,9 +1,6 @@
 package com.swapify.modelo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 import lombok.*;
 
@@ -14,8 +11,10 @@ import lombok.*;
 @Setter
 public class Perfil {
       @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long id;
+
       @Column(nullable = false, unique = true)
-      @Setter(AccessLevel.NONE)
       private String nif;
 
       private String nombre;

@@ -16,8 +16,10 @@ import java.util.List;
 @ToString(exclude = "contrasenna")
 public class Usuario {
       @Id
+      @GeneratedValue(strategy = GenerationType.IDENTITY)
+      private Long id;
+
       @Column(nullable = false, unique = true)
-      @Setter(AccessLevel.NONE)
       @NonNull
       private String email;
 
@@ -26,7 +28,7 @@ public class Usuario {
       private String contrasenna;
 
       @OneToOne(cascade = CascadeType.ALL)
-      @JoinColumn(name = "fk_perfil_nif", referencedColumnName = "nif")
+      @JoinColumn(name = "fk_perfil_id", referencedColumnName = "id")
       private Perfil perfil;
 
       @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
