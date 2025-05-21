@@ -1,43 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Modal Login Reutilizable</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo Tailwind Overlay</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="/js/login-overlay.js"></script>
+    <script defer src="/static/js/card.js"></script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-<!-- Contenido principal -->
-<main class="p-6 text-center space-y-4">
-    <h1 class="text-4xl font-bold">Contenido Principal</h1>
-    <p class="text-lg max-w-xl mx-auto">Este contenido se mostrará difuminado cuando se abra la tarjeta superpuesta.</p>
-    <button id="open-login" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Iniciar sesión</button>
-</main>
+<!-- Botón para abrir el modal -->
+<button id="openModal" class="flex items-center gap-2 text-white bg-indigo-600 px-4 py-2 rounded hover:bg-indigo-700 transition">
+    <span class="material-icons">login</span>
+    <span>Iniciar Sesión</span>
+</button>
 
-<!-- Overlay y tarjeta de login -->
-<div id="login-overlay" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-    <div class="relative bg-white p-6 rounded-2xl shadow-xl w-11/12 max-w-md">
-        <!-- Botón de cerrar -->
-        <button id="close-login" class="absolute top-3 left-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+<!-- Overlay del modal -->
+<div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
 
-        <!-- Formulario de login -->
-        <h2 class="text-2xl font-semibold text-center text-indigo-600 mb-4">Iniciar sesión</h2>
-        <form method="post" action="/login" class="space-y-4">
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
-                <input type="email" id="email" name="email" required class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+    <!-- Tarjeta del modal -->
+    <div id="modalCard"
+         class="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6 transform transition-all duration-300 scale-95 opacity-0">
+
+        <!-- Botón para cerrar -->
+        <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition">
+            <span class="material-icons text-2xl">close</span>
+        </button>
+
+        <!-- Contenido dinámico reutilizable -->
+        <div id="modalContent">
+            <h2 class="text-2xl font-bold text-center text-indigo-600 mb-6">Iniciar sesión</h2>
+
+            <!-- Mensaje de error -->
+            <div th:if="${error}" class="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm text-center">
+                <p th:text="${error}">Credenciales incorrectas</p>
             </div>
 
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-                <input type="password" id="password" name="password" required class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-            </div>
+            <!-- Formulario de login con Thymeleaf -->
+            <form th:action="@{/login}" method="post" th:object="${usuario}" class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+                    <input type="email" id="email" th:field="*{email}" required
+                           class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                </div>
 
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Entrar</button>
-        </form>
+                <div>
+                    <label for="contrasena" class="block text-sm font-medium text-gray-700">Contraseña</label>
+                    <input type="password" id="contrasena" th:field="*{contrasenna}" required
+                           class="w-full px-4 py-2 mt-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                </div>
+
+                <button type="submit"
+                        class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+                    Iniciar sesión
+                </button>
+            </form>
+
+            <p class="mt-4 text-center text-sm text-gray-600">
+                ¿No tienes cuenta? <a href="/register" class="text-indigo-600 hover:underline">Regístrate aquí</a>.
+            </p>
+        </div>
+
     </div>
 </div>
+
 </body>
 </html>

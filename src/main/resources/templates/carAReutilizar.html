@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal Reutilizable</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="/static/js/card.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<!-- Botón para abrir el modal -->
+<button id="openModal" class="flex items-center gap-2 text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition">
+    <span class="material-icons">login</span>
+    <span>Iniciar Sesión</span>
+</button>
+
+<!-- Overlay del modal -->
+<div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+
+    <!-- Tarjeta del modal -->
+    <div id="modalCard" class="relative bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 p-6">
+
+        <!-- Botón para cerrar -->
+        <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition">
+            <span class="material-icons text-2xl">close</span>
+        </button>
+
+        <!-- Contenido dinámico reutilizable -->
+        <div id="modalContent">
+            <h2 class="text-xl font-semibold mb-4 text-center">Iniciar Sesión</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Usuario" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <input type="password" placeholder="Contraseña" class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Entrar</button>
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
