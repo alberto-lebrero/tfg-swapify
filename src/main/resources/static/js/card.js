@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             modalOverlay.classList.remove('flex');
             modalOverlay.classList.add('hidden');
-        }, 300); // mismo tiempo que `duration-300`
+        }, 300); // mismo tiempo que duration-300
     }
 
     closeModal.addEventListener('click', cerrarModal);

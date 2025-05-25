@@ -28,7 +28,7 @@ public class PublicacionService {
       }
 
       @Transactional(readOnly = true)
-      public List<Publicacion> listarPublicacion() {
+      public List<Publicacion> listarPublicaciones() {
             return publicacionJPADAO.findAll();
       }
 
@@ -38,5 +38,14 @@ public class PublicacionService {
 
       public void eliminarPublicacion(Publicacion publicacionAEliminar) {
             publicacionJPADAO.delete(publicacionAEliminar);
+      }
+
+      public List<Publicacion> buscarPublicaciones(String titulo, List<String> tipos) {
+            if((titulo == null || titulo.isEmpty()) && (tipos == null || tipos.isEmpty())) {
+                  return publicacionJPADAO.findAll();
+            } else {
+                  return publicacionJPADAO.encontrarPorTituloYTipo(titulo, tipos);
+            }
+
       }
 }

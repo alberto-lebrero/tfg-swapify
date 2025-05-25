@@ -25,19 +25,21 @@ public class UsuarioController {
       }*/
 
       @GetMapping("/login")
-      public String mostrarFormularioLogin(Model modelo){
+      public String mostrarLogin(Model modelo){
             modelo.addAttribute("usuario", new Usuario());
             return "login";
       }
 
       @PostMapping("/login")
-      public String login(@ModelAttribute("usuario") Usuario usuarioFormulario, HttpSession sesion, Model modelo){
-            Usuario usuario = usuarioService.autenticar(usuarioFormulario.getEmail(), usuarioFormulario.getContrasenna());
-            if (usuario != null) {
-                  sesion.setAttribute("usuarioLogueado", usuario);
+      public String procesarLogin(@ModelAttribute("usuario") Usuario usuarioAAutenticar, HttpSession sesion, Model modelo){
+            Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuarioAAutenticar.getEmail(), usuarioAAutenticar.getContrasenna());
+
+            if (usuarioAutenticado != null) {
+                  sesion.setAttribute("usuarioLogueado", usuarioAutenticado);
                   return "redirect:/home";
             } else {
                   modelo.addAttribute("error", "Credemciales incorrectas");
+                  modelo.addAttribute("usuario", new Usuario());
                   return "login";
             }
       }

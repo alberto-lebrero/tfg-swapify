@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <title>Swapify - Página de Inicio</title>
-        <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
@@ -11,6 +10,9 @@
         <div th:insert="fragments/header :: header"></div>
 
         <main class="flex-grow max-w-7xl mx-auto mt-24 px-4">
+            <section>
+
+            </section>
             <section class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-4">Explora publicaciones</h2>
                 <p class="text-lg text-gray-600">Intercambia bienes y servicios fácilmente con otros usuarios.</p>
@@ -33,5 +35,6 @@
         </main>
 
         <div th:insert="fragments/footer :: footer"></div>
+        <div th:insert="fragments/scripts :: scripts"></div>
     </body>
 </html>

@@ -40,10 +40,10 @@ public class UsuarioService {
             usuarioJPADAO.delete(usuarioAEliminar);
       }
 
-      public Usuario autenticar(String email, String contrasenna) {
-            Usuario usuario = usuarioJPADAO.obtenerUsuarioPor(email);
-            if(usuario != null && usuario.getContrasenna().equals(contrasenna)) {
-                  return usuario;
+      public Usuario autenticarUsuario(String email, String contrasennaAComprobar) {
+            Usuario usuarioAutenticado = usuarioJPADAO.obtenerUsuarioPor(email);
+            if (usuarioAutenticado != null && usuarioAutenticado.getContrasenna().equals(contrasennaAComprobar)) {
+                  return usuarioAutenticado;
             }
             return null;
       }
