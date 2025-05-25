@@ -42,7 +42,7 @@ public class PublicacionController {
             return "redirect:/home";
       }
 
-      @GetMapping("/home")
+      @GetMapping()
       public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
                                      @RequestParam(value = "tipos", required = false) List<String> tipos,
                                      Model modelo) {
