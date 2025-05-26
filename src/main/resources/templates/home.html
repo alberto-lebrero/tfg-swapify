@@ -7,9 +7,8 @@
     </head>
     <body class="flex flex-col min-h-screen pt-[128px] bg-gray-50 text-gray-800">
 
-        <th:block th:replace="~{fragments/header :: header}"></th:block>
-        <th:block th:replace="~{fragments/filters :: filters}"></th:block>
-
+        <th:block th:replace="~{fragments/encabezado :: encabezado}"></th:block>
+        <th:block th:replace="~{fragments/filtros :: filtros}"></th:block>
         <main class="flex-grow max-w-7xl mx-auto px-4 mt-24 sm:px-6 lg:px-8">
             <section class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-4">Explora publicaciones</h2>
@@ -71,7 +70,7 @@
         </main>
 
 
-        <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+        <th:block th:replace="~{fragments/pie-pagina :: pie-pagina}"></th:block>
         <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
     </body>
 </html>

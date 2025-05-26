@@ -1,4 +1,4 @@
-<header th:fragment="header" class="bg-white shadow-sm fixed top-0 w-full z-50 h-16 border-b border-gray-200">
+<header th:fragment="encabezado" class="bg-white shadow-sm fixed top-0 w-full z-50 h-16 border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
         <a href="/" class="text-2xl font-bold text-indigo-600 transform hover:scale-110 transition duration-300">
             Swapify
@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div th:if="${usuario == null}" class="flex items-center gap-4">
-                <a href="/login" class="text-indigo-600 hover:text-indigo-800">
+                <a href="/login" title="Inicia sesión" class="text-indigo-600 hover:text-indigo-800">
                     <span class="material-icons text-4xl">account_circle</span>
                 </a>
             </div>
