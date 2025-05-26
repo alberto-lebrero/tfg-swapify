@@ -1,0 +1,45 @@
+<section th:fragment="filters"
+         class="bg-white w-screen fixed top-16 z-40 border-b py-4">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between px-6 gap-4">
+
+        <div class="flex items-center gap-4">
+            <input type="text" placeholder="Buscar publicaciones..." name="query"
+                   class="w-96 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+
+            <div class="relative group">
+                <button class="flex items-center border border-gray-300 px-4 py-2 rounded hover:bg-gray-100 transition">
+                    Filtrar por
+                    <span class="material-icons ml-2">expand_more</span>
+                </button>
+
+                <div class="absolute top-full mt-1 bg-white border rounded shadow w-48 z-10 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 pointer-events-auto">
+                    <div class="p-2 space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="tipo" value="bien" class="mr-2" />
+                            Bien
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="tipo" value="servicio" class="mr-2" />
+                            Servicio
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ml-auto">
+            <a th:if="${usuario != null}"
+               href="/publicaciones/nueva"
+               title="Añadir publicación"
+               class="flex items-center justify-center w-12 h-12 bg-white text-indigo-600 rounded-full hover:bg-indigo-100 transition">
+                <span class="material-icons">add</span>
+            </a>
+
+            <a th:if="${usuario == null}"
+               href="/login"
+               title="Inicia sesión para publicar"
+               class="flex items-center justify-center w-12 h-12 bg-white text-gray-400 rounded-full hover:bg-gray-100 transition">
+                <span class="material-icons">add</span>
+            </a>
+        </div>
+    </div>
+</section>

@@ -2,17 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="es">
     <head>
         <meta charset="UTF-8">
-        <title>Swapify - Página de Inicio</title>
+        <title>Swapify - Inicio</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
-    <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+    <body class="flex flex-col min-h-screen pt-[128px] bg-gray-50 text-gray-800">
 
-        <div th:insert="fragments/header :: header"></div>
+        <th:block th:replace="~{fragments/header :: header}"></th:block>
+        <th:block th:replace="~{fragments/filters :: filters}"></th:block>
 
-        <main class="flex-grow max-w-7xl mx-auto mt-24 px-4">
-            <section>
-
-            </section>
+        <main class="flex-grow max-w-7xl mx-auto px-4 mt-24 sm:px-6 lg:px-8">
             <section class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-4">Explora publicaciones</h2>
                 <p class="text-lg text-gray-600">Intercambia bienes y servicios fácilmente con otros usuarios.</p>
@@ -37,6 +35,7 @@
                 <div th:each="publicacion, stat : ${publicaciones}" class="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
 
                     <!-- Carrusel de imágenes -->
+
                     <div class="relative h-48 overflow-hidden">
                         <div th:id="'carrusel-' + ${stat.index}" class="flex transition-transform duration-300 h-48">
                             <img th:each="img : ${publicacion.imagenes}"
@@ -57,7 +56,6 @@
                         </button>
                     </div>
 
-                    <!-- Contenido -->
                     <div class="p-4 flex flex-col flex-grow">
                         <h3 class="text-lg font-semibold text-indigo-700 mb-1" th:text="${publicacion.titulo}">Título</h3>
                         <p class="text-sm text-gray-600 mb-3 line-clamp-3" th:text="${publicacion.descripcion}">Descripción</p>
@@ -72,7 +70,8 @@
 
         </main>
 
-        <div th:insert="fragments/footer :: footer"></div>
-        <div th:insert="fragments/scripts :: scripts"></div>
+
+        <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+        <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
     </body>
 </html>
