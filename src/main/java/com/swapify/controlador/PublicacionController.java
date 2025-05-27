@@ -31,7 +31,7 @@ public class PublicacionController {
       // Es un proyecto MVC (Modelo Vista Controlador). API REST
 
       //¿? comprobar
-      @GetMapping("/home/{id}")
+      @GetMapping("/publicacion/{id}")
       public String verPublicacion(@PathVariable Long id, Model modelo) {
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
 
@@ -42,7 +42,7 @@ public class PublicacionController {
             return "redirect:/home";
       }
 
-      @GetMapping()
+      @GetMapping("/publicacion")
       public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
                                      @RequestParam(value = "tipos", required = false) List<String> tipos,
                                      Model modelo) {
