@@ -1,0 +1,41 @@
+<section th:fragment="publicaciones" class="mt-10 flex justify-center">
+    <div class="w-full max-w-7xl">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+            <div th:each="publicacion, stat : ${publicaciones}">
+                <!-- Tarjeta de la publicación -->
+                <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
+                    <!-- Carrusel de imágenes -->
+                    <div class="relative h-48 overflow-hidden">
+                        <div th:id="'carrusel-' + ${stat.index}" class="flex transition-transform duration-300 h-48">
+                            <img th:each="img : ${publicacion.imagenes}"
+                                 th:src="@{${img.url}}"
+                                 class="w-full flex-shrink-0 object-cover h-48"/>
+                        </div>
+                        <!-- Botones para el carrusel -->
+                        <button type="button"
+                                th:onclick="'anterior(' + '\'carrusel-' + ${stat.index} + '\')'"
+                                class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-1">
+                            <span class="material-icons">chevron_left</span>
+                        </button>
+                        <button type="button"
+                                th:onclick="'siguiente(' + '\'carrusel-' + ${stat.index} + '\')'"
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-70 rounded-full p-1">
+                            <span class="material-icons">chevron_right</span>
+                        </button>
+                    </div>
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-lg font-semibold text-indigo-700 mb-1" th:text="${publicacion.titulo}">Título</h3>
+                        <div class="text-right text-lg font-semibold text-indigo-600 mb-1"
+                             th:if="${publicacion.precio != null}" th:text="${publicacion.precio} + ' €'">100 €</div>
+                        <div class="text-right text-sm text-gray-500 mb-1"
+                             th:if="${publicacion.tiempo != null}" th:text="${publicacion.tiempo}">2 horas</div>
+                        <a th:href="@{'/home/' + ${publicacion.id}}"
+                           class="mt-auto inline-block bg-indigo-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-center">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

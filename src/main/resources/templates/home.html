@@ -4,11 +4,14 @@
         <meta charset="UTF-8">
         <title>Swapify - Inicio</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body class="flex flex-col min-h-screen pt-[128px] bg-gray-50 text-gray-800">
 
         <th:block th:replace="~{fragments/encabezado :: encabezado}"></th:block>
         <th:block th:replace="~{fragments/filtros :: filtros}"></th:block>
+
+
         <main class="flex-grow max-w-7xl mx-auto px-4 mt-24 sm:px-6 lg:px-8">
             <section class="text-center mb-12">
                 <h2 class="text-3xl font-bold mb-4">Explora publicaciones</h2>
@@ -29,6 +32,10 @@
                     <p class="text-gray-600">Filtra publicaciones según tus intereses y necesidades.</p>
                 </div>
             </section>
+
+
+            <!-- TAL VEZ SERÍA MEJOR QUITAR ESTA SECCION Y DEJAR DIRECTAMENTE LA DE
+            /fragmenst/publicaciones.html Y DEJARLO MÁS SENCILLO -->
 
             <section class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div th:each="publicacion, stat : ${publicaciones}" class="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
@@ -67,6 +74,8 @@
                 </div>
             </section>
 
+            <!-- Utilizar este html mejor es más sencillo y útil -->
+            <th:block th:replace="~{fragments/publicaciones :: publicaciones}"></th:block>
         </main>
 
 
