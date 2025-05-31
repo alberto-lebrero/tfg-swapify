@@ -7,22 +7,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class UsuarioController {
       @Autowired
       private UsuarioService usuarioService;
-
-      /*@GetMapping("/home")
-      public String inicio(Model modelo, HttpSession sesion) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
-            modelo.addAttribute("usuario", usuario);
-            return "home";
-      }*/
 
       @GetMapping("/login")
       public String mostrarLogin(Model modelo){
@@ -30,15 +20,15 @@ public class UsuarioController {
             return "login";
       }
 
-      @PostMapping("/login")
-      public String procesarLogin(@ModelAttribute("usuario") Usuario usuarioAAutenticar, HttpSession sesion, Model modelo){
+      @RequestMapping(value = "/login", method = RequestMethod.POST)
+      public String login(@ModelAttribute("usuario") Usuario usuarioAAutenticar, HttpSession sesion, Model modelo){
             Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuarioAAutenticar.getEmail(), usuarioAAutenticar.getContrasenna());
 
             if (usuarioAutenticado != null) {
-                  sesion.setAttribute("usuarioLogueado", usuarioAutenticado);
+                  sesion.setAttribute("usuario", usuarioAutenticado);
                   return "redirect:/home";
             } else {
-                  modelo.addAttribute("error", "Credemciales incorrectas");
+                  modelo.addAttribute("error", "Credenciales incorrectas");
                   modelo.addAttribute("usuario", new Usuario());
                   return "login";
             }
@@ -51,7 +41,7 @@ public class UsuarioController {
       }
 
       @GetMapping("/register")
-      public String m (Model modelo) {
+      public String mostrarRegistroUsuario (Model modelo) {
             modelo.addAttribute("usuario", new Usuario());
             return "register";
       }

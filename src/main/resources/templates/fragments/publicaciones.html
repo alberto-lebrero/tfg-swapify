@@ -1,7 +1,7 @@
 <section th:fragment="publicaciones" class="mt-10 flex justify-center">
     <div class="w-full max-w-7xl">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
-            <div th:each="publicacion, stat : ${publicaciones}">
+            <div th:if="${not #lists.isEmpty(publicaciones)}" th:each="publicacion, stat : ${publicaciones}">
                 <!-- Tarjeta de la publicación -->
                 <div class="bg-white rounded-2xl shadow-md hover:shadow-lg transition overflow-hidden flex flex-col">
                     <!-- Carrusel de imágenes -->
@@ -35,6 +35,11 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div th:if="${#lists.isEmpty(publicaciones)}"
+                 class="col-span-full text-center text-gray-500 text-lg items-center justify-center">
+                Lo sentimos, aun no hay publicaciones disponibles
+                <span class="material-icons text-gray-400 mr-2">sentiment_dissatisfied</span>
             </div>
         </div>
     </div>
