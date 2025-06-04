@@ -5,11 +5,39 @@
             Swapify
         </a>
         <nav>
-            <div th:if="${usuario != null}" class="flex items-center gap-4">
-                <span th:if="${usuario.perfil != null}">
-                    Hola, <span th:text="${usuario.perfil.nombre}" class="font-semibold"></span>
-                </span>
+            <div th:if="${usuario != null}" class="relative">
+                <button id="userMenuButton" onclick="toggleUserMenu()" class="focus:outline-none">
+                    <span class="material-icons text-4xl text-indigo-600">account_circle</span>
+                </button>
+
+                <!-- Menú desplegable -->
+                <div id="userMenu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 z-50">
+                    <div class="p-4 border-b border-gray-100 flex items-center gap-3">
+                        <span class="material-icons text-4xl">account_circle</span>
+                        <div>
+                            <p class="font-semibold text-gray-800"
+                               th:text="${usuario.perfil != null} ? ${usuario.perfil.nombre + ' ' + usuario.perfil.primerApellido + ' ' + usuario.perfil.segundoApellido}">
+                            </p>
+                            <p class="text-sm text-gray-500"
+                               th:text="${usuario.email != null} ? ${usuario.email}">
+                            </p>
+                        </div>
+                    </div>
+                    <ul class="py-2">
+                        <li>
+                            <a href="/user/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2">
+                                <span class="material-icons text-base">person</span> Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/logout" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-100 flex items-center gap-2">
+                                <span class="material-icons text-base">logout</span> Cerrar sesión
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
             <div th:if="${usuario == null}" class="flex items-center gap-4">
                 <a href="/login" title="Inicia sesión" class="text-indigo-600 hover:text-indigo-800">
                     <span class="material-icons text-4xl">account_circle</span>

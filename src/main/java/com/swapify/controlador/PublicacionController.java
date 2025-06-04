@@ -1,37 +1,73 @@
 package com.swapify.controlador;
 
+import com.swapify.modelo.Bien;
 import com.swapify.modelo.Publicacion;
+import com.swapify.modelo.Servicio;
 import com.swapify.modelo.Usuario;
 import com.swapify.servicio.PublicacionService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
+@RequestMapping("/publicaciones")
 public class PublicacionController {
       @Autowired
       private PublicacionService publicacionService;
 
-      @PostMapping("/publicacion")
-      public String crearPublicacion(@ModelAttribute Publicacion publicacionACrear, HttpSession sesion) {
+      @GetMapping("/nueva")
+      public String mostrarFormularioNuevaPublicacion(Model model, HttpSession sesion) {
+            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+
+            model.addAttribute("publicacion", new Publicacion());
+            return "publicaciones/nueva";
+      }
+
+      @PostMapping("/nueva")
+      public String crearPublicacion(HttpServletRequest request, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
 
-            if(usuarioActual != null) {
-                  publicacionACrear.setUsuario(usuarioActual); //Asocio la publicacion al usuario que ha iniciado sesión
-                  publicacionService.crearPublicacion(publicacionACrear);
-                  return "redirect:/home";
+            if (usuarioActual == null) {
+                  return "redirect:/login";
             }
-            return "redirect:/login";
+
+            Publicacion publicacionACrear;
+
+            if (request.getParameter("estado") != null) {
+                  Bien bien = new Bien();
+                  bien.setEstado(request.getParameter("estado"));
+                  bien.setDisponible(request.getParameter("disponible") != null);
+                  bien.setAncho(Double.parseDouble(request.getParameter("ancho")));
+                  bien.setAlto(Double.parseDouble(request.getParameter("alto")));
+                  bien.setProfundidad(Double.parseDouble(request.getParameter("profundidad")));
+                  publicacionACrear = bien;
+            } else {
+                  Servicio servicio = new Servicio();
+                  servicio.setHoras(Integer.parseInt(request.getParameter("horas")));
+                  servicio.setMinutos(Integer.parseInt(request.getParameter("minutos")));
+                  publicacionACrear = servicio;
+            }
+
+            publicacionACrear.setTitulo(request.getParameter("titulo"));
+            publicacionACrear.setDescripcion(request.getParameter("descripcion"));
+            publicacionACrear.setPrecio(Double.parseDouble(request.getParameter("precio")));
+            publicacionACrear.setUsuario(usuarioActual);
+
+            publicacionService.crearPublicacion(publicacionACrear);
+            return "redirect:/home";
       }
+
 
       // Es un proyecto MVC (Modelo Vista Controlador). API REST
 
       //¿? comprobar
-      @GetMapping("/publicacion/{id}")
+      @GetMapping("/{id}")
       public String verPublicacion(@PathVariable Long id, Model modelo) {
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
 
@@ -42,7 +78,7 @@ public class PublicacionController {
             return "redirect:/home";
       }
 
-      @GetMapping("/publicacion")
+      @GetMapping("")
       public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
                                      @RequestParam(value = "tipos", required = false) List<String> tipos,
                                      Model modelo) {
@@ -51,7 +87,13 @@ public class PublicacionController {
             return "home";
       }
 
-      @PutMapping("/publicacion/{id}")
+      @GetMapping("/editar/{id}")
+      public String mostrarFormularioEditarPublicacion(@PathVariable Long id, Model modelo) {
+            modelo.addAttribute("publicacion", publicacionService.encontrarPublicacion(id));
+            return "editar_publicacion";
+      }
+
+      @PutMapping("/{id}")
       public String actualizarPublicacion(@PathVariable Long id, @ModelAttribute Publicacion publicacionAActualizar, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
 
@@ -66,7 +108,7 @@ public class PublicacionController {
             return "redirect:/login";
       }
 
-      @DeleteMapping("/publicacion/{id}")
+      @DeleteMapping("/{id}")
       public void borrarPublicacion(@PathVariable Long id, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
 

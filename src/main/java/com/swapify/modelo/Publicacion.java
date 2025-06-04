@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class Publicacion {
+public class Publicacion {
       @Id
       @GeneratedValue(strategy = GenerationType.IDENTITY)
       @Setter(AccessLevel.NONE)

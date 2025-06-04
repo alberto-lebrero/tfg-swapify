@@ -30,7 +30,7 @@
         </div>
         <div class="ml-auto">
             <a th:if="${usuario != null}"
-               href="/publicaciones/nueva"
+               th:href="@{/publicaciones/nueva}"
                title="Añadir publicación"
                class="flex items-center justify-center w-12 h-12 bg-white text-indigo-600 rounded-full hover:bg-indigo-100 transition">
                 <span class="material-icons">add</span>

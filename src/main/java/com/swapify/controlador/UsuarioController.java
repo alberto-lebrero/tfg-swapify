@@ -61,7 +61,7 @@ public class UsuarioController {
 
       @GetMapping("/user/profile")
       public String verPerfil(HttpSession sesion, Model modelo) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario == null) {
                   return "redirect:/login";
             }
@@ -73,7 +73,7 @@ public class UsuarioController {
        */
       @GetMapping("/user/profile/edit")
       public String editarPerfil(HttpSession sesion, Model modelo) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario == null) {
                   return "redirect:/login";
             }
@@ -83,7 +83,7 @@ public class UsuarioController {
 
       @PostMapping("user/edit")
       public String actualizarPerfil(@ModelAttribute Usuario usuarioActualizado, HttpSession sesion) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario == null) {
                   return "redirect:/login";
             }
@@ -94,7 +94,7 @@ public class UsuarioController {
 
       @PostMapping("")
       public String eliminarCuenta(HttpSession sesion) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario != null) {
                   usuarioService.eliminarUsuario(usuario);
                   sesion.invalidate();
