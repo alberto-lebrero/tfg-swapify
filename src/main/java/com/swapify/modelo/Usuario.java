@@ -36,7 +36,4 @@ public class Usuario {
 
       @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
       private List<Oferta> ofertas = new ArrayList<>();
-
-
-      //Codificar equals, hashCode y toString
 }
