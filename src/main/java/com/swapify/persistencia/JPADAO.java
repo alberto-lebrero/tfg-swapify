@@ -13,12 +13,11 @@ import java.util.List;
 
 /**
  * Clase abstracta que implementa el patrón DAO utilizando JPA y Spring Boot.
- * <p>
- * Proporciona una implementación genérica de las operaciones CRUD, delegando
- * en el {@link EntityManager} para gestionar entidades de tipo {@code T} identificadas por {@code K}.
- *
- * @param <T> Tipo de la entidad
- * @param <K> Tipo de clave primaria de la entidad
+ * <p> Proporciona una implementación genérica de las operaciones CRUD, delegando
+ *     en el {@link EntityManager} para gestionar entidades de tipo {@code T} identificadas por {@code K}.
+ *     @param <T> Tipo de la entidad
+ *     @param <K> Tipo de clave primaria de la entidad
+ * </p>
  */
 @AllArgsConstructor
 @Repository
