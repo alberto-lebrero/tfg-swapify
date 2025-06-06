@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import com.swapify.persistencia.DAOException;
 
 @Service
 @Transactional
@@ -24,6 +25,11 @@ public class PerfilService {
       @Transactional(readOnly = true)
       public Perfil encontrarPerfil(Long id) {
             return perfilJPADAO.find(id);
+      }
+
+      @Transactional(readOnly = true)
+      public Perfil encontrarPerfilDeUsuario(Long idUsuario) throws DAOException {
+            return perfilJPADAO.encontrarPerfilPorUsuarioId(idUsuario);
       }
 
       @Transactional(readOnly = true)

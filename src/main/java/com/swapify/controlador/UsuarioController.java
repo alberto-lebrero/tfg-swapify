@@ -1,5 +1,6 @@
 package com.swapify.controlador;
 
+import com.swapify.modelo.Perfil;
 import com.swapify.modelo.Usuario;
 import com.swapify.persistencia.DAOException;
 import com.swapify.servicio.UsuarioService;
@@ -64,6 +65,7 @@ public class UsuarioController {
             return "redirect:/login";
       }
 
+      /*
       @GetMapping("/user/profile")
       public String verPerfil(HttpSession sesion, Model modelo) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
@@ -73,9 +75,7 @@ public class UsuarioController {
             modelo.addAttribute("usuario", usuario);
             return "user/profile/profile";
       }
-      /**
-       * Repasar
-       */
+      // Repasar
       @GetMapping("/user/profile/edit")
       public String editarPerfil(HttpSession sesion, Model modelo) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
@@ -87,12 +87,14 @@ public class UsuarioController {
       }
 
       @PostMapping("/user/profile/edit")
-      public String actualizarPerfil(@ModelAttribute Usuario usuarioAActualizarPerfil, HttpSession sesion) {
+      public String actualizarPerfil(@ModelAttribute("perfil") Perfil perfilAActualizar, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
 
             if (usuario == null) {
                   return "redirect:/login";
             }
+
+            Perfil perfil = usuario.getPerfil();
 
             usuario.getPerfil().setNombre(usuarioAActualizarPerfil.getPerfil().getNombre());
             usuario.getPerfil().setPrimerApellido(usuarioAActualizarPerfil.getPerfil().getPrimerApellido());
@@ -104,7 +106,7 @@ public class UsuarioController {
             usuario.getPerfil().setCodigoPostal(usuarioAActualizarPerfil.getPerfil().getCodigoPostal());
             usuario.getPerfil().setPais(usuarioAActualizarPerfil.getPerfil().getPais());
 
-            usuarioService.actualizarUsuario(usuarioAActualizarPerfil);
+            per.actualizarUsuario(usuarioAActualizarPerfil);
             sesion.setAttribute("usuarioLogueado", usuarioAActualizarPerfil);
             return "redirect:/user/profile";
       }
@@ -118,4 +120,6 @@ public class UsuarioController {
             }
             return "redirect:/home";
       }
+
+       */
 }
