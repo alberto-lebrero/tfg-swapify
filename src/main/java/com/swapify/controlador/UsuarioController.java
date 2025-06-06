@@ -71,7 +71,7 @@ public class UsuarioController {
                   return "redirect:/login";
             }
             modelo.addAttribute("usuario", usuario);
-            return "profile";
+            return "user/profile/profile";
       }
       /**
        * Repasar
@@ -83,21 +83,33 @@ public class UsuarioController {
                   return "redirect:/login";
             }
             modelo.addAttribute("usuario", usuario);
-            return "editarPerfil";
+            return "user/profile/edit";
       }
 
-      @PostMapping("user/edit")
-      public String actualizarPerfil(@ModelAttribute Usuario usuarioActualizado, HttpSession sesion) {
+      @PostMapping("/user/profile/edit")
+      public String actualizarPerfil(@ModelAttribute Usuario usuarioAActualizarPerfil, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+
             if (usuario == null) {
                   return "redirect:/login";
             }
-            usuarioService.actualizarUsuario(usuarioActualizado);
-            sesion.setAttribute("usuarioLogueado", usuarioActualizado);
+
+            usuario.getPerfil().setNombre(usuarioAActualizarPerfil.getPerfil().getNombre());
+            usuario.getPerfil().setPrimerApellido(usuarioAActualizarPerfil.getPerfil().getPrimerApellido());
+            usuario.getPerfil().setSegundoApellido(usuarioAActualizarPerfil.getPerfil().getSegundoApellido());
+            usuario.getPerfil().setTelefono(usuarioAActualizarPerfil.getPerfil().getTelefono());
+            usuario.getPerfil().setDescripcion(usuarioAActualizarPerfil.getPerfil().getDescripcion());
+            usuario.getPerfil().setDireccion(usuarioAActualizarPerfil.getPerfil().getDireccion());
+            usuario.getPerfil().setProvincia(usuarioAActualizarPerfil.getPerfil().getProvincia());
+            usuario.getPerfil().setCodigoPostal(usuarioAActualizarPerfil.getPerfil().getCodigoPostal());
+            usuario.getPerfil().setPais(usuarioAActualizarPerfil.getPerfil().getPais());
+
+            usuarioService.actualizarUsuario(usuarioAActualizarPerfil);
+            sesion.setAttribute("usuarioLogueado", usuarioAActualizarPerfil);
             return "redirect:/user/profile";
       }
 
-      @PostMapping("")
+      @PostMapping("/user/profile")
       public String eliminarCuenta(HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario != null) {

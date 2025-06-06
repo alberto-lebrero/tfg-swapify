@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <title>Editar Perfil</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800">
+        <th:block th:replace="~{fragments/encabezado :: encabezado}"></th:block>
+
+        <!-- Contenido principal -->
+        <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+            <div class="max-w-4xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h1 class="text-2xl font-semibold text-gray-800">Perfil</h1>
+                    <a href="/user/profile" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                        <span class="material-icons">visibility</span>
+                    </a>
+                </div>
+
+                <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-6" th:object="${usuario.perfil}">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">NIF</label>
+                        <input type="text" th:field="*{nif}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Nombre</label>
+                        <input type="text" th:field="*{nombre}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Primer Apellido</label>
+                        <input type="text" th:field="*{primerApellido}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Segundo Apellido</label>
+                        <input type="text" th:field="*{segundoApellido}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Teléfono</label>
+                        <input type="text" th:field="*{telefono}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Descripción</label>
+                        <input type="text" th:field="*{descripcion}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Dirección</label>
+                        <input type="text" th:field="*{direccion}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Provincia</label>
+                        <input type="text" th:field="*{provincia}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Código Postal</label>
+                        <input type="text" th:field="*{codigoPostal}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">País</label>
+                        <input type="text" th:field="*{pais}" contenteditable="true"
+                               class="mt-1 w-full border px-4 py-2 rounded-lg bg-indigo-50 text-gray-700"/>
+                    </div>
+
+                    <div class="md:col-span-2 flex justify-end gap-4 mt-6">
+                        <a href="/user/profile"
+                           class="inline-block px-5 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition">
+                            Cancelar
+                        </a>
+
+                        <button type="submit"
+                                class="px-5 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            Guardar cambios
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+
+        <th:block th:replace="~{fragments/pie-pagina :: pie-pagina}"></th:block>
+        <th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+    </body>
+</html>
