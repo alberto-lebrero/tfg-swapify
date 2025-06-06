@@ -41,10 +41,10 @@ public class UsuarioService {
       }
 
       public Usuario autenticarUsuario(String email, String contrasennaAComprobar) {
-            Usuario usuarioAutenticado = usuarioJPADAO.obtenerUsuarioPor(email);
-            if (usuarioAutenticado != null && usuarioAutenticado.getContrasenna().equals(contrasennaAComprobar)) {
-                  return usuarioAutenticado;
+            Usuario usuarioAAutenticar = usuarioJPADAO.obtenerUsuarioPor(email);
+            if (usuarioAAutenticar != null && usuarioAAutenticar.getContrasenna().equals(contrasennaAComprobar)) {
+                  return usuarioAAutenticar;
             }
-            return null;
+            return null; // Contraseña incorrecta
       }
 }

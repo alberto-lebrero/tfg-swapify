@@ -22,14 +22,19 @@ public class UsuarioController {
 
       @RequestMapping(value = "/login", method = RequestMethod.POST)
       public String login(@ModelAttribute("usuario") Usuario usuarioAAutenticar, HttpSession sesion, Model modelo){
-            Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuarioAAutenticar.getEmail(), usuarioAAutenticar.getContrasenna());
+            try {
+                  Usuario usuarioAutenticado = usuarioService.autenticarUsuario(usuarioAAutenticar.getEmail(), usuarioAAutenticar.getContrasenna());
 
-            if (usuarioAutenticado != null) {
-                  sesion.setAttribute("usuario", usuarioAutenticado);
-                  return "redirect:/home";
-            } else {
-                  modelo.addAttribute("error", "Credenciales incorrectas");
-                  modelo.addAttribute("usuario", new Usuario());
+                  if (usuarioAutenticado != null) {
+                        sesion.setAttribute("usuario", usuarioAutenticado);
+                        return "redirect:/home";
+                  } else {
+                        modelo.addAttribute("error", "Credenciales incorrectas");
+                        modelo.addAttribute("usuario", new Usuario());
+                        return "login";
+                  }
+            } catch (DAOException e) {
+                  modelo.addAttribute("error", e.getMessage());
                   return "login";
             }
       }
