@@ -5,6 +5,7 @@ import com.swapify.modelo.Publicacion;
 import com.swapify.modelo.Servicio;
 import com.swapify.modelo.Usuario;
 import com.swapify.servicio.PublicacionService;
+import com.swapify.servicio.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -21,17 +23,35 @@ public class PublicacionController {
       @Autowired
       private PublicacionService publicacionService;
 
-      @GetMapping("/nueva")
-      public String mostrarFormularioNuevaPublicacion(Model model, HttpSession sesion) {
-            Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogueado");
+      @Autowired
+      private UsuarioService usuarioService;
+
+      @GetMapping("/create")
+      public String mostrarFormularioCrearPublicacion(Model model, HttpSession sesion) {
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+
+            if (usuario == null) {
+                  return "redirect:/login";
+            }
 
             model.addAttribute("publicacion", new Publicacion());
-            return "publicaciones/nueva";
+            return "/publicaciones/create";
       }
+/*
+      @PostMapping("/create")
+      public String crearPublicacion(@ModelAttribute Publicacion publicacion, HttpSession sesion) {
+            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
+            if (usuarioActual == null) return "redirect:/login";
+            publicacion.setUsuario(usuarioActual);
+            publicacion.setFecha(LocalDateTime.now());
+            publicacionService.crearPublicacion(publicacion);
+            return "redirect:/home";
+      }
+*/
 
-      @PostMapping("/nueva")
+      @PostMapping("/create")
       public String crearPublicacion(HttpServletRequest request, HttpSession sesion) {
-            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
 
             if (usuarioActual == null) {
                   return "redirect:/login";
@@ -58,6 +78,7 @@ public class PublicacionController {
             publicacionACrear.setDescripcion(request.getParameter("descripcion"));
             publicacionACrear.setPrecio(Double.parseDouble(request.getParameter("precio")));
             publicacionACrear.setUsuario(usuarioActual);
+            publicacionACrear.setFecha(LocalDateTime.now());
 
             publicacionService.crearPublicacion(publicacionACrear);
             return "redirect:/home";
@@ -73,7 +94,7 @@ public class PublicacionController {
 
             if(publicacion != null) {
                   modelo.addAttribute("publicacion", publicacion);
-                  return "publicacion/detalle";
+                  return "publicaciones/read";
             }
             return "redirect:/home";
       }
@@ -87,15 +108,15 @@ public class PublicacionController {
             return "home";
       }
 
-      @GetMapping("/editar/{id}")
+      @GetMapping("/update/{id}")
       public String mostrarFormularioEditarPublicacion(@PathVariable Long id, Model modelo) {
             modelo.addAttribute("publicacion", publicacionService.encontrarPublicacion(id));
-            return "editar_publicacion";
+            return "update";
       }
 
       @PutMapping("/{id}")
       public String actualizarPublicacion(@PathVariable Long id, @ModelAttribute Publicacion publicacionAActualizar, HttpSession sesion) {
-            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
 
             if(usuarioActual != null) {
                   Publicacion publicacionOriginal = publicacionService.encontrarPublicacion(id);
@@ -108,9 +129,9 @@ public class PublicacionController {
             return "redirect:/login";
       }
 
-      @DeleteMapping("/{id}")
+      @DeleteMapping("/delete/{id}")
       public void borrarPublicacion(@PathVariable Long id, HttpSession sesion) {
-            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuarioLogueado");
+            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
 
             if(usuarioActual != null) {
                   Publicacion publicacionAEliminar = publicacionService.encontrarPublicacion(id);

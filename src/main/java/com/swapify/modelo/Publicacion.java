@@ -30,14 +30,4 @@ public class Publicacion {
       @ManyToOne
       @JoinColumn(name = "fk_usuario_email", nullable = false)
       private Usuario usuario;
-
-      @ManyToOne
-      @JoinColumn(name = "fk_categoria_id", nullable = false)
-      private Categoria categoria;
-
-      @OneToMany(mappedBy = "publicaciones", cascade = CascadeType.ALL, orphanRemoval = true)
-      private List<Oferta> ofertas;
-
-      @OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
-      private List<Imagen> imagenes = new ArrayList<>();
 }

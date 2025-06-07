@@ -25,6 +25,4 @@ public class Categoria {
       @Column(name = "descripción")
       private String descripcion;
 
-      @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
-      private List<Publicacion> publicaciones = new ArrayList<>();
 }
