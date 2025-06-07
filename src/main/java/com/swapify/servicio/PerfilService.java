@@ -44,4 +44,16 @@ public class PerfilService {
       public void eliminarPerfil(Perfil perfilAEliminar) {
             perfilJPADAO.delete(perfilAEliminar);
       }
+
+      public void eliminarPerfil(Long idUsuario) {
+            try {
+                  Perfil perfilAEliminar = encontrarPerfilDeUsuario(idUsuario);
+                  if (perfilAEliminar != null) {
+                        perfilJPADAO.delete(perfilAEliminar);
+                  }
+            } catch (DAOException e) {
+                  e.printStackTrace();
+            }
+      }
+
 }

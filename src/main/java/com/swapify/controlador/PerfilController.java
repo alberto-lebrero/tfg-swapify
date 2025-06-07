@@ -133,4 +133,13 @@ public class PerfilController {
 
             return "redirect:/user/profile/read";
       }
+
+      @PostMapping("/delete")
+      public String eliminarPerfil(HttpSession session) {
+            Usuario usuario = (Usuario) session.getAttribute("usuario");
+            if (usuario != null) {
+                  perfilService.eliminarPerfil(usuario.getId());
+            }
+            return "redirect:/user/profile/read";
+      }
 }

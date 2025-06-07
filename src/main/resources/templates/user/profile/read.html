@@ -12,10 +12,18 @@
             <div class="max-w-4xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-semibold text-gray-800">Perfil</h1>
-                    <a href="/user/profile/update" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
-                        <span class="material-icons">edit</span>
-                    </a>
+                    <div class="flex items-center gap-6">
+                        <a href="/user/profile/update" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                            <span class="material-icons">edit</span>
+                        </a>
+                        <form th:action="@{/user/profile/delete}" method="post" onsubmit="return confirm('¿Deseas eliminar tu perfil?')">
+                            <button type="submit" class="text-red-600 hover:text-red-800 flex items-center gap-1">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
+
 
                 <form class="grid grid-cols-1 md:grid-cols-2 gap-6" th:object="${perfil}">
                     <div>
