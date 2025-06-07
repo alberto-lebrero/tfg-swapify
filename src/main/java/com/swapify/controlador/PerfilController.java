@@ -30,11 +30,11 @@ public class PerfilController {
 
             try {
                   Perfil perfil = perfilService.encontrarPerfilDeUsuario(usuario.getId());
-                  //modelo.addAttribute("usuario", usuario);
+                  modelo.addAttribute("usuario", usuario);
                   if (perfil == null) {
                         return "redirect:/user/profile/create";
                   }
-                  modelo.addAttribute("perfil", perfil);
+                  modelo.addAttribute("perfil", usuario.getPerfil());
                   return "user/profile/read";
             } catch (DAOException e) {
                   modelo.addAttribute("error", "No se pudo cargar el perfil del usuario");
@@ -58,7 +58,7 @@ public class PerfilController {
             if (usuario == null) return "redirect:/login";
 
             if (usuario.getPerfil() != null) {
-                  return "redirect:/user/profile/read";
+                  return "user/profile/read";
             }
 
             modelo.addAttribute("usuario", usuario);
@@ -135,11 +135,18 @@ public class PerfilController {
       }
 
       @PostMapping("/delete")
-      public String eliminarPerfil(HttpSession session) {
+      public String eliminarPerfil(HttpSession session, Model modelo) {
             Usuario usuario = (Usuario) session.getAttribute("usuario");
-            if (usuario != null) {
-                  perfilService.eliminarPerfil(usuario.getId());
+            if (usuario != null && usuario.getPerfil() != null) {
+                  try {
+                        perfilService.eliminarPerfilDeUsuario(usuario.getId());
+
+                        usuario = usuarioService.encontrarUsuario(usuario.getId());
+                        session.setAttribute("usuario", usuario); // Guarda los cambios en sesión
+                  } catch (DAOException e) {
+                        modelo.addAttribute("error", "Error al eliminar el perfil: " + e.getMessage());
+                        return "error";                  }
             }
-            return "redirect:/user/profile/read";
+            return "redirect:/user/profile/create";
       }
 }

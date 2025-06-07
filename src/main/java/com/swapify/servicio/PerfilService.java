@@ -1,7 +1,9 @@
 package com.swapify.servicio;
 
 import com.swapify.modelo.Perfil;
+import com.swapify.modelo.Usuario;
 import com.swapify.persistencia.PerfilJPADAO;
+import com.swapify.persistencia.UsuarioJPADAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +15,12 @@ import com.swapify.persistencia.DAOException;
 @Transactional
 public class PerfilService {
       private final PerfilJPADAO perfilJPADAO;
+      private final UsuarioJPADAO usuarioJPADAO;
+
       @Autowired
-      public PerfilService(PerfilJPADAO perfilJPADAO) {
+      public PerfilService(PerfilJPADAO perfilJPADAO, UsuarioJPADAO usuarioJPADAO) {
             this.perfilJPADAO = perfilJPADAO;
+            this.usuarioJPADAO = usuarioJPADAO;
       }
 
       public void crearPerfil(Perfil perfilACrear) {
@@ -45,14 +50,14 @@ public class PerfilService {
             perfilJPADAO.delete(perfilAEliminar);
       }
 
-      public void eliminarPerfil(Long idUsuario) {
-            try {
-                  Perfil perfilAEliminar = encontrarPerfilDeUsuario(idUsuario);
-                  if (perfilAEliminar != null) {
-                        perfilJPADAO.delete(perfilAEliminar);
-                  }
-            } catch (DAOException e) {
-                  e.printStackTrace();
+      public void eliminarPerfilDeUsuario(Long idUsuario) throws DAOException {
+            // Busca el usuario asociado al perfil
+            Usuario usuario = usuarioJPADAO.find(idUsuario);
+            if (usuario != null && usuario.getPerfil() != null) {
+                  Perfil perfil = usuario.getPerfil();
+                  usuario.setPerfil(null); // desasocia el perfil
+                  usuarioJPADAO.update(usuario); // guarda el cambio (importante hacer merge/update)
+                  perfilJPADAO.delete(perfil); // Eliminar explícitamente el perfil
             }
       }
 

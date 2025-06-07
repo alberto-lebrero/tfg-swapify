@@ -27,7 +27,7 @@ public class Usuario {
       @NonNull
       private String contrasenna;
 
-      @OneToOne(cascade = CascadeType.ALL)
+      @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
       @JoinColumn(name = "fk_perfil_id", referencedColumnName = "id")
       private Perfil perfil;
 

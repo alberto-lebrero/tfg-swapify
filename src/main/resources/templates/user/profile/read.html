@@ -16,7 +16,7 @@
                         <a href="/user/profile/update" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
                             <span class="material-icons">edit</span>
                         </a>
-                        <form th:action="@{/user/profile/delete}" method="post" onsubmit="return confirm('¿Deseas eliminar tu perfil?')">
+                        <form th:action="@{/user/profile/delete}" method="post">
                             <button type="submit" class="text-red-600 hover:text-red-800 flex items-center gap-1">
                                 <span class="material-icons">delete</span>
                             </button>
