@@ -16,17 +16,16 @@
                                     <span class="material-icons text-red-500 hover:text-red-700 cursor-pointer">delete</span>
                                 </button>
                             </form>
-
                         </div>
 
                         <span th:if="${publicacion.descripcion != null}" th:text="${publicacion.descripcion}"
-                              class="text-lg text-sm text-gray-500 mb-1">NombreCompleto</span>
+                              class="text-lg text-sm text-gray-500 mb-1"></span>
 
                         <div class="mt-auto">
                             <div class="text-right text-lg font-semibold text-indigo-600 mb-1"
                                  th:if="${publicacion.precio != null}" th:text="${publicacion.precio} + ' €'"></div>
                             <span th:text="${publicacion.usuario != null && publicacion.usuario.perfil != null ? publicacion.usuario.perfil.nombre + ' ' + publicacion.usuario.perfil.apellidos : 'Anónimo'}"
-                                  class="text-right text-sm text-gray-500 mb-1">NombreCompleto</span>
+                                  class="text-right text-sm text-gray-500 mb-1"></span>
 
 
                             <span th:if="${publicacion.fecha != null}"

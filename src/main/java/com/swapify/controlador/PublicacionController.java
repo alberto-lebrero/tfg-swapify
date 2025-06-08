@@ -103,28 +103,55 @@ public class PublicacionController {
                   return "redirect:/login";
             }
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
-            modelo.addAttribute("publicacion", publicacion); // singular
-            return "publicaciones/update"; // plantillas/publicaciones/update.html
+            // Solo dejar editar si es el usuario logueado
+            if (publicacion == null || !publicacion.getUsuario().getId().equals(usuario.getId())) {
+                  return "redirect:/publicaciones";
+            }
+
+            // Binding de herencia
+            if (publicacion instanceof Bien) {
+                  modelo.addAttribute("publicacion", (Bien) publicacion);
+            } else if (publicacion instanceof Servicio) {
+                  modelo.addAttribute("publicacion", (Servicio) publicacion);
+            }
+
+            return "publicaciones/update";
       }
 
-      // ACTUALIZAR PUBLICACIÓN (POST /publicaciones/update/{id})
       @PostMapping("/update/{id}")
-      public String actualizarPublicacion(
-              @PathVariable Long id,
-              @ModelAttribute Publicacion publicacionAActualizar,
-              HttpSession sesion
-      ) {
+      public String actualizarPublicacion(@PathVariable Long id,
+                                          @ModelAttribute Publicacion publicacionAActualizar,
+                                          HttpServletRequest request,
+                                          HttpSession sesion, Model modelo) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
             if (usuarioActual == null) {
                   return "redirect:/login";
             }
-            Publicacion publicacionOriginal = publicacionService.encontrarPublicacion(id);
 
-            if (publicacionOriginal != null && publicacionOriginal.getUsuario().getId().equals(usuarioActual.getId())) {
-                  publicacionService.actualizarPublicacion(publicacionAActualizar);
+            Publicacion publicacion = publicacionService.encontrarPublicacion(id);
+
+            if (publicacion != null && publicacion.getUsuario().getId().equals(usuarioActual.getId())) {
+                  publicacion.setTitulo(request.getParameter("titulo"));
+                  publicacion.setDescripcion(request.getParameter("descripcion"));
+                  publicacion.setPrecio(Double.parseDouble(request.getParameter("precio")));
+
+                  if (publicacion instanceof Bien bienOriginal) {
+                        bienOriginal.setEstado(request.getParameter("estado"));
+                        bienOriginal.setAncho(Double.parseDouble(request.getParameter("ancho")));
+                        bienOriginal.setAlto(Double.parseDouble(request.getParameter("alto")));
+                        bienOriginal.setProfundidad(Double.parseDouble(request.getParameter("profundidad")));
+                  }
+                  if (publicacion instanceof Servicio servicioOriginal) {
+                        servicioOriginal.setHoras(Integer.parseInt(request.getParameter("horas")));
+                        servicioOriginal.setMinutos(Integer.parseInt(request.getParameter("minutos")));
+                  }
+
+
+                  publicacionService.actualizarPublicacion(publicacion);
             }
             return "redirect:/publicaciones";
       }
+
 
       // ELIMINAR PUBLICACIÓN (POST /publicaciones/delete/{id})
       @PostMapping("/delete/{id}")

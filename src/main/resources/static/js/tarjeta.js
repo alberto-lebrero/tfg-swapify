@@ -1,37 +1,27 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const modalOverlay = document.getElementById('modalOverlay');
-    const openModal = document.getElementById('openModal');
-    const closeModal = document.getElementById('closeModal');
-    const modalCard = document.getElementById('modalCard');
+    // Función para abrir el modal y rellenar los campos
+    function abrirModalEdicion(id, titulo, descripcion, precio) {
+        document.getElementById('edit-id').value = id;
+        document.getElementById('edit-titulo').value = titulo;
+        document.getElementById('edit-descripcion').value = descripcion;
+        document.getElementById('edit-precio').value = precio;
 
-    openModal.addEventListener('click', () => {
-        modalOverlay.classList.remove('hidden');
-        modalOverlay.classList.add('flex');
+        // Setear acción del formulario para que apunte al endpoint update correcto
+        document.getElementById('editForm').action = '/publicaciones/update/' + id;
 
-        // Usar timeout para que el navegador detecte el cambio
-        setTimeout(() => {
-            modalCard.classList.remove('scale-95', 'opacity-0');
-            modalCard.classList.add('scale-100', 'opacity-100');
-        }, 10); // breve retardo para forzar transición
-    });
-
-    function cerrarModal() {
-        // Transición de salida
-        modalCard.classList.remove('scale-100', 'opacity-100');
-        modalCard.classList.add('scale-95', 'opacity-0');
-
-        // Esperar a que termine la animación antes de ocultar
-        setTimeout(() => {
-            modalOverlay.classList.remove('flex');
-            modalOverlay.classList.add('hidden');
-        }, 300); // mismo tiempo que duration-300
+        document.getElementById('editModalOverlay').classList.remove('hidden');
     }
 
-    closeModal.addEventListener('click', cerrarModal);
+    // Cerrar modal
+    document.getElementById('closeEditModal').onclick = function() {
+        document.getElementById('editModalOverlay').classList.add('hidden');
+    }
 
-    modalOverlay.addEventListener('click', (e) => {
-        if (!modalCard.contains(e.target)) {
-            cerrarModal();
+    // Cerrar modal haciendo click fuera del card
+    document.getElementById('editModalOverlay').onclick = function(e) {
+        if (e.target === this) {
+            this.classList.add('hidden');
         }
-    });
+    }
+
 });

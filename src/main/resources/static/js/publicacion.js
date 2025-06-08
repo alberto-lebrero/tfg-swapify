@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Asocia el evento a los radios
+    // Asocia el evento a los radioButton
     const radioBien = document.getElementById('tipoBien');
     const radioServicio = document.getElementById('tipoServicio');
     if (radioBien && radioServicio) {

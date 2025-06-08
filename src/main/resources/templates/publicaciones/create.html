@@ -8,30 +8,25 @@
     </head>
     <body class="flex flex-col min-h-screen bg-gray-50 text-gray-800 pt-[128px]">
         <th:block th:replace="~{fragments/encabezado :: encabezado}"></th:block>
-        <main class="flex-grow max-w-7xl mx-auto px-4 mt-24 sm:px-6 lg:px-8">
-
+        <main class="flex-grow flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8">
             <form th:action="@{/publicaciones/create}" th:object="${publicacion}" method="post"
-                  enctype="multipart/form-data" class="max-w-lg mx-auto mt-16 p-8 bg-white rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold mb-6 text-center">Crear nueva publicación</h2>
+                  enctype="multipart/form-data"
+                  class="w-full max-w-xl md:max-w-2xl mx-auto my-24 mb-32 p-10 bg-white rounded-2xl shadow-2xl">
+                <h2 class="text-3xl font-bold mb-8 text-center">Crear nueva publicación</h2>
 
-                <!-- Título -->
-                <div class="mb-4">
+                <div class="mb-6">
                     <label class="block text-gray-700 font-semibold mb-2" for="titulo">Título</label>
                     <input type="text" id="titulo" th:field="*{titulo}" required
                            class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" />
                 </div>
 
-                <!-- Descripción -->
-                <div class="mb-4">
+                <div class="mb-6">
                     <label class="block text-gray-700 font-semibold mb-2" for="descripcion">Descripción</label>
                     <textarea id="descripcion" th:field="*{descripcion}" rows="4" required
-                              class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400" ></textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
                 </div>
 
-                <!-- Precio -->
-
-
-                <div class="relative mb-4">
+                <div class="relative mb-6">
                     <label class="block text-gray-700 font-semibold mb-2" for="precio">Precio</label>
                     <div class="relative">
                         <input type="number" id="precio" th:field="*{precio}" min="0.00" step="0.05" required
@@ -40,8 +35,7 @@
                     </div>
                 </div>
 
-                <!-- Tipo: Bien o Servicio -->
-                <div class="mb-4">
+                <div class="mb-6">
                     <label class="block text-gray-700 font-semibold mb-2">Tipo</label>
                     <div class="flex items-center gap-6">
                         <label class="flex items-center">
@@ -54,22 +48,15 @@
                         </label>
                     </div>
                 </div>
-                
+
                 <!-- Campos adicionales según el tipo elegido por el usuario -->
                 <div id="camposAdicionales"></div>
 
-
-                <div>
-
-                </div>
-
-                <!-- Botón enviar -->
-                <div class="text-center">
-                    <button onclick="window.history.back()" class="bg-gray-500 text-white px-6 py-2 rounded-xl hover:bg-gray-600 transition">Cancelar</button>
-                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 transition">Publicar</button>
+                <div class="text-center mt-8">
+                    <button onclick="window.history.back()" type="button" class="bg-gray-500 text-white px-6 py-2 rounded-xl hover:bg-gray-600 transition">Cancelar</button>
+                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-xl hover:bg-blue-600 transition ml-4">Publicar</button>
                 </div>
             </form>
-
         </main>
 
 
