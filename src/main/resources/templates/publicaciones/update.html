@@ -59,7 +59,17 @@
                     </div>
                 </div>
 
-                <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700">Guardar cambios</button>
+                <div class="flex justify-between gap-4 mt-4">
+                    <button type="button"
+                            onclick="window.history.back()"
+                            class="w-1/2 bg-gray-300 text-gray-800 py-2 rounded-lg hover:bg-gray-400 transition">
+                        Cancelar
+                    </button>
+                    <button type="submit"
+                            class="w-1/2 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+                        Guardar cambios
+                    </button>
+                </div>
             </form>
         </div>
     </body>
