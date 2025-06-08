@@ -40,11 +40,11 @@ public class PublicacionService {
             publicacionJPADAO.delete(publicacionAEliminar);
       }
 
-      public List<Publicacion> buscarPublicaciones(String titulo, List<String> tipos) {
-            if((titulo == null || titulo.isEmpty()) && (tipos == null || tipos.isEmpty())) {
-                  return publicacionJPADAO.findAll();
+      public List<Publicacion> buscarPublicaciones(String titulo) {
+            if(titulo == null || titulo.isEmpty()) {
+                  return listarPublicaciones();
             } else {
-                  return publicacionJPADAO.encontrarPorTituloYTipo(titulo, tipos);
+                  return publicacionJPADAO.encontrarPorTitulo(titulo);
             }
 
       }

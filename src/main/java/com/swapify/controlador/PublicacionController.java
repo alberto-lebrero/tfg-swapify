@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,33 +25,32 @@ public class PublicacionController {
       @Autowired
       private UsuarioService usuarioService;
 
+      // LISTADO DE PUBLICACIONES (GET /publicaciones)
+      @GetMapping("")
+      public String verPublicaciones(
+              @RequestParam(value = "titulo", required = false) String titulo,
+              Model modelo
+      ) {
+            List<Publicacion> publicaciones = publicacionService.buscarPublicaciones(titulo);
+            modelo.addAttribute("publicaciones", publicaciones);
+            return "publicaciones/list"; // plantillas/publicaciones/list.html
+      }
+
+      // FORMULARIO DE CREACIÓN (GET /publicaciones/create)
       @GetMapping("/create")
       public String mostrarFormularioCrearPublicacion(Model model, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
-
             if (usuario == null) {
                   return "redirect:/login";
             }
-
-            model.addAttribute("publicacion", new Publicacion());
-            return "/publicaciones/create";
+            model.addAttribute("publicacion", new Publicacion()); // OJO: cambia a singular, más claro para el form
+            return "publicaciones/create"; // plantillas/publicaciones/create.html
       }
-/*
-      @PostMapping("/create")
-      public String crearPublicacion(@ModelAttribute Publicacion publicacion, HttpSession sesion) {
-            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
-            if (usuarioActual == null) return "redirect:/login";
-            publicacion.setUsuario(usuarioActual);
-            publicacion.setFecha(LocalDateTime.now());
-            publicacionService.crearPublicacion(publicacion);
-            return "redirect:/home";
-      }
-*/
 
+      // GUARDAR PUBLICACIÓN (POST /publicaciones/create)
       @PostMapping("/create")
       public String crearPublicacion(HttpServletRequest request, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
-
             if (usuarioActual == null) {
                   return "redirect:/login";
             }
@@ -81,63 +79,62 @@ public class PublicacionController {
             publicacionACrear.setFecha(LocalDateTime.now());
 
             publicacionService.crearPublicacion(publicacionACrear);
-            return "redirect:/home";
+            return "redirect:/publicaciones"; // Siempre al listado
       }
 
-
-      // Es un proyecto MVC (Modelo Vista Controlador). API REST
-
-      //¿? comprobar
+      // DETALLE DE UNA PUBLICACIÓN (GET /publicaciones/{id})
       @GetMapping("/{id}")
       public String verPublicacion(@PathVariable Long id, Model modelo) {
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
 
-            if(publicacion != null) {
-                  modelo.addAttribute("publicacion", publicacion);
-                  return "publicaciones/read";
+            if (publicacion != null) {
+                  modelo.addAttribute("publicacion", publicacion); // OJO: en singular
+                  return "publicaciones/read"; // plantillas/publicaciones/read.html
             }
-            return "redirect:/home";
+            return "redirect:/publicaciones";
       }
 
-      @GetMapping("")
-      public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
-                                     @RequestParam(value = "tipos", required = false) List<String> tipos,
-                                     Model modelo) {
-            List<Publicacion> publicacionesAVisualizar = publicacionService.buscarPublicaciones(titulo, tipos);
-            modelo.addAttribute("publicacionesAVisualizar", publicacionesAVisualizar);
-            return "home";
-      }
-
+      // FORMULARIO DE ACTUALIZACIÓN (GET /publicaciones/update/{id})
       @GetMapping("/update/{id}")
-      public String mostrarFormularioEditarPublicacion(@PathVariable Long id, Model modelo) {
-            modelo.addAttribute("publicacion", publicacionService.encontrarPublicacion(id));
-            return "update";
-      }
-
-      @PutMapping("/{id}")
-      public String actualizarPublicacion(@PathVariable Long id, @ModelAttribute Publicacion publicacionAActualizar, HttpSession sesion) {
-            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
-
-            if(usuarioActual != null) {
-                  Publicacion publicacionOriginal = publicacionService.encontrarPublicacion(id);
-
-                  if(publicacionOriginal != null && publicacionOriginal.getUsuario().getId().equals(usuarioActual.getId())) {
-                        publicacionService.actualizarPublicacion(publicacionAActualizar);
-                  }
-                  return "redirect:/home";
+      public String mostrarFormularioActualizarPublicacion(@PathVariable Long id, Model modelo, HttpSession sesion) {
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+            if (usuario == null) {
+                  return "redirect:/login";
             }
-            return "redirect:/login";
+            Publicacion publicacion = publicacionService.encontrarPublicacion(id);
+            modelo.addAttribute("publicacion", publicacion); // singular
+            return "publicaciones/update"; // plantillas/publicaciones/update.html
       }
 
-      @DeleteMapping("/delete/{id}")
-      public void borrarPublicacion(@PathVariable Long id, HttpSession sesion) {
+      // ACTUALIZAR PUBLICACIÓN (POST /publicaciones/update/{id})
+      @PostMapping("/update/{id}")
+      public String actualizarPublicacion(
+              @PathVariable Long id,
+              @ModelAttribute Publicacion publicacionAActualizar,
+              HttpSession sesion
+      ) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
+            if (usuarioActual == null) {
+                  return "redirect:/login";
+            }
+            Publicacion publicacionOriginal = publicacionService.encontrarPublicacion(id);
 
-            if(usuarioActual != null) {
+            if (publicacionOriginal != null && publicacionOriginal.getUsuario().getId().equals(usuarioActual.getId())) {
+                  publicacionService.actualizarPublicacion(publicacionAActualizar);
+            }
+            return "redirect:/publicaciones";
+      }
+
+      // ELIMINAR PUBLICACIÓN (POST /publicaciones/delete/{id})
+      @PostMapping("/delete/{id}")
+      public String borrarPublicacion(@PathVariable Long id, HttpSession sesion) {
+            Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
+            if (usuarioActual != null) {
                   Publicacion publicacionAEliminar = publicacionService.encontrarPublicacion(id);
-                  if(publicacionAEliminar != null && publicacionAEliminar.getUsuario().getId().equals(usuarioActual.getId())) {
+                  if (publicacionAEliminar != null && publicacionAEliminar.getUsuario().getId().equals(usuarioActual.getId())) {
                         publicacionService.eliminarPublicacion(publicacionAEliminar);
                   }
             }
+            return "redirect:/publicaciones";
       }
 }

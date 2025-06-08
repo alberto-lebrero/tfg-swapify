@@ -13,17 +13,12 @@ public class PublicacionJPADAO extends JPADAO<Publicacion, Long> {
             super(Publicacion.class);
       }
 
-      public List<Publicacion> encontrarPorTituloYTipo(String titulo, List<String> tipos) {
+      public List<Publicacion> encontrarPorTitulo(String titulo) {
             TypedQuery<Publicacion> consulta = em.createQuery(
-                    "SELECT p FROM Publicacion p WHERE" +
-                            "(:titulo IS NULL OR LOWER(p.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))) " +
-                    "AND (:tipos IS NULL OR p.categoria IN :tipos)", Publicacion.class
+                    "SELECT p FROM Publicacion p WHERE " +
+                            "(:titulo IS NULL OR LOWER(p.titulo) LIKE LOWER(CONCAT('%', :titulo, '%')))", Publicacion.class
             );
-
             consulta.setParameter("titulo", (titulo == null || titulo.isEmpty()) ? null : titulo);
-            consulta.setParameter("tipos", (tipos == null || tipos.isEmpty()) ? null : tipos);
-
             return consulta.getResultList();
       }
 }
-;
