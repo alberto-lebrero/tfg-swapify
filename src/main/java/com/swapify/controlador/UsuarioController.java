@@ -28,7 +28,7 @@ public class UsuarioController {
 
                   if (usuarioAutenticado != null) {
                         sesion.setAttribute("usuario", usuarioAutenticado);
-                        return "redirect:/home";
+                        return "redirect:/publicaciones";
                   } else {
                         modelo.addAttribute("error", "Credenciales incorrectas");
                         modelo.addAttribute("usuario", new Usuario());

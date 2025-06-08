@@ -29,10 +29,11 @@ public class PublicacionController {
       @GetMapping("")
       public String verPublicaciones(
               @RequestParam(value = "titulo", required = false) String titulo,
-              Model modelo
-      ) {
+              Model modelo, HttpSession sesion) {
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             List<Publicacion> publicaciones = publicacionService.buscarPublicaciones(titulo);
             modelo.addAttribute("publicaciones", publicaciones);
+            modelo.addAttribute("usuario", usuario);
             return "publicaciones/list"; // plantillas/publicaciones/list.html
       }
 
