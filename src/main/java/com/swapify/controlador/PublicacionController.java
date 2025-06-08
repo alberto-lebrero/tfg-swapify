@@ -4,6 +4,7 @@ import com.swapify.modelo.Bien;
 import com.swapify.modelo.Publicacion;
 import com.swapify.modelo.Servicio;
 import com.swapify.modelo.Usuario;
+import com.swapify.persistencia.DAOException;
 import com.swapify.servicio.PublicacionService;
 import com.swapify.servicio.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,15 +28,24 @@ public class PublicacionController {
 
       // LISTADO DE PUBLICACIONES (GET /publicaciones)
       @GetMapping("")
-      public String verPublicaciones(
-              @RequestParam(value = "titulo", required = false) String titulo,
-              Model modelo, HttpSession sesion) {
+      public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
+                                     Model modelo, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             List<Publicacion> publicaciones = publicacionService.buscarPublicaciones(titulo);
             modelo.addAttribute("publicaciones", publicaciones);
             modelo.addAttribute("usuario", usuario);
-            return "publicaciones/list"; // plantillas/publicaciones/list.html
+            return "publicaciones/list";
       }
+
+      @GetMapping("/read/{id}")
+      public String verPublicacion(@PathVariable Long id, HttpSession sesion, Model modelo) {
+            Usuario usuario = (Usuario) sesion.getAttribute("usuario");
+            Publicacion publicacion = publicacionService.encontrarPublicacion(id);
+            modelo.addAttribute("publicacion", publicacion);
+            modelo.addAttribute("usuario", usuario);
+            return "publicaciones/read";
+      }
+
 
       // FORMULARIO DE CREACIÓN (GET /publicaciones/create)
       @GetMapping("/create")
