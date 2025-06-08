@@ -55,10 +55,9 @@ public class PerfilService {
             Usuario usuario = usuarioJPADAO.find(idUsuario);
             if (usuario != null && usuario.getPerfil() != null) {
                   Perfil perfil = usuario.getPerfil();
-                  usuario.setPerfil(null); // desasocia el perfil
-                  usuarioJPADAO.update(usuario); // guarda el cambio (importante hacer merge/update)
-                  perfilJPADAO.delete(perfil); // Eliminar explícitamente el perfil
+                  usuario.setPerfil(null); // desasocio el perfil
+                  usuarioJPADAO.update(usuario); // guardo el cambio
+                  perfilJPADAO.delete(perfil); // Elimino explícitamente el perfil
             }
       }
-
 }

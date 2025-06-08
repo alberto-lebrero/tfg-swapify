@@ -4,7 +4,6 @@ import com.swapify.modelo.Bien;
 import com.swapify.modelo.Publicacion;
 import com.swapify.modelo.Servicio;
 import com.swapify.modelo.Usuario;
-import com.swapify.persistencia.DAOException;
 import com.swapify.servicio.PublicacionService;
 import com.swapify.servicio.UsuarioService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,10 +22,6 @@ public class PublicacionController {
       @Autowired
       private PublicacionService publicacionService;
 
-      @Autowired
-      private UsuarioService usuarioService;
-
-      // LISTADO DE PUBLICACIONES (GET /publicaciones)
       @GetMapping("")
       public String verPublicaciones(@RequestParam(value = "titulo", required = false) String titulo,
                                      Model modelo, HttpSession sesion) {
@@ -47,18 +42,16 @@ public class PublicacionController {
       }
 
 
-      // FORMULARIO DE CREACIÓN (GET /publicaciones/create)
       @GetMapping("/create")
       public String mostrarFormularioCrearPublicacion(Model model, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
             if (usuario == null) {
                   return "redirect:/login";
             }
-            model.addAttribute("publicacion", new Publicacion()); // OJO: cambia a singular, más claro para el form
-            return "publicaciones/create"; // plantillas/publicaciones/create.html
+            model.addAttribute("publicacion", new Publicacion());
+            return "publicaciones/create";
       }
 
-      // GUARDAR PUBLICACIÓN (POST /publicaciones/create)
       @PostMapping("/create")
       public String crearPublicacion(HttpServletRequest request, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
@@ -90,22 +83,20 @@ public class PublicacionController {
             publicacionACrear.setFecha(LocalDateTime.now());
 
             publicacionService.crearPublicacion(publicacionACrear);
-            return "redirect:/publicaciones"; // Siempre al listado
+            return "redirect:/publicaciones";
       }
 
-      // DETALLE DE UNA PUBLICACIÓN (GET /publicaciones/{id})
       @GetMapping("/{id}")
       public String verPublicacion(@PathVariable Long id, Model modelo) {
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
 
             if (publicacion != null) {
-                  modelo.addAttribute("publicacion", publicacion); // OJO: en singular
-                  return "publicaciones/read"; // plantillas/publicaciones/read.html
+                  modelo.addAttribute("publicacion", publicacion);
+                  return "publicaciones/read";
             }
             return "redirect:/publicaciones";
       }
 
-      // FORMULARIO DE ACTUALIZACIÓN (GET /publicaciones/update/{id})
       @GetMapping("/update/{id}")
       public String mostrarFormularioActualizarPublicacion(@PathVariable Long id, Model modelo, HttpSession sesion) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
@@ -113,7 +104,7 @@ public class PublicacionController {
                   return "redirect:/login";
             }
             Publicacion publicacion = publicacionService.encontrarPublicacion(id);
-            // Solo dejar editar si es el usuario logueado
+            // Solo permito editar una publicación si es el usuario logueado
             if (publicacion == null || !publicacion.getUsuario().getId().equals(usuario.getId())) {
                   return "redirect:/publicaciones";
             }
@@ -132,7 +123,7 @@ public class PublicacionController {
       public String actualizarPublicacion(@PathVariable Long id,
                                           @ModelAttribute Publicacion publicacionAActualizar,
                                           HttpServletRequest request,
-                                          HttpSession sesion, Model modelo) {
+                                          HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");
             if (usuarioActual == null) {
                   return "redirect:/login";
@@ -156,14 +147,12 @@ public class PublicacionController {
                         servicioOriginal.setMinutos(Integer.parseInt(request.getParameter("minutos")));
                   }
 
-
                   publicacionService.actualizarPublicacion(publicacion);
             }
             return "redirect:/publicaciones";
       }
 
 
-      // ELIMINAR PUBLICACIÓN (POST /publicaciones/delete/{id})
       @PostMapping("/delete/{id}")
       public String borrarPublicacion(@PathVariable Long id, HttpSession sesion) {
             Usuario usuarioActual = (Usuario) sesion.getAttribute("usuario");

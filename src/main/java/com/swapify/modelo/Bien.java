@@ -18,5 +18,4 @@ public class Bien extends Publicacion {
       private double ancho;
       private double alto;
       private double profundidad;
-
 }

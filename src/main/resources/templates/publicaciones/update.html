@@ -14,48 +14,56 @@
                 <p th:text="${error}">Error al actualizar la publicación</p>
             </div>
 
-            <!-- Formulario de edición -->
             <form th:action="@{'/publicaciones/update/' + ${publicacion.id}}" method="post" th:object="${publicacion}">
                 <div class="mb-4">
                     <label class="block text-gray-700">Título</label>
-                    <input type="text" th:field="*{titulo}" class="w-full border px-3 py-2 rounded-lg" required>
+                    <input contenteditable="true" type="text" th:field="*{titulo}"
+                           class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700" required>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Descripción</label>
-                    <textarea th:field="*{descripcion}" class="w-full border px-3 py-2 rounded-lg" required></textarea>
+                    <textarea contenteditable="true" th:field="*{descripcion}"
+                              class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700" required></textarea>
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700">Precio (€)</label>
-                    <input type="number" th:field="*{precio}" min="0" class="w-full border px-3 py-2 rounded-lg" required>
+                    <input contenteditable="true" type="number" th:field="*{precio}" min="0"
+                           class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700" required>
                 </div>
 
                 <div th:if="${publicacion.getClass().simpleName == 'Bien'}">
                     <div class="mb-4">
                         <label class="block text-gray-700">Estado</label>
-                        <input type="text" th:field="*{estado}" class="w-full border px-3 py-2 rounded-lg">
+                        <input contenteditable="true" type="text" th:field="*{estado}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Ancho (cm)</label>
-                        <input type="number" step="0.01" th:field="*{ancho}" class="w-full border px-3 py-2 rounded-lg">
+                        <input contenteditable="true" type="number" step="0.01" th:field="*{ancho}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Alto (cm)</label>
-                        <input type="number" step="0.01" th:field="*{alto}" class="w-full border px-3 py-2 rounded-lg">
+                        <input contenteditable="true" type="number" step="0.01" th:field="*{alto}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Profundidad (cm)</label>
-                        <input type="number" step="0.01" th:field="*{profundidad}" class="w-full border px-3 py-2 rounded-lg">
+                        <input contenteditable="true" type="number" step="0.01" th:field="*{profundidad}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                 </div>
 
                 <div th:if="${publicacion.getClass().simpleName == 'Servicio'}">
                     <div class="mb-4">
                         <label class="block text-gray-700">Horas</label>
-                        <input type="number" th:field="*{horas}" class="w-full border px-3 py-2 rounded-lg">
+                        <input type="number" th:field="*{horas}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                     <div class="mb-4">
                         <label class="block text-gray-700">Minutos</label>
-                        <input type="number" th:field="*{minutos}" class="w-full border px-3 py-2 rounded-lg">
+                        <input type="number" th:field="*{minutos}"
+                               class="w-full border px-3 py-2 rounded-lg bg-indigo-50 text-gray-700">
                     </div>
                 </div>
 

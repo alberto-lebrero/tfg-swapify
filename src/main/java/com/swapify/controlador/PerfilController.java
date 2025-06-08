@@ -42,7 +42,6 @@ public class PerfilController {
             }
       }
 
-      // Mostrar formulario de edición
       @GetMapping("/update")
       public String mostrarFormularioEdicion(HttpSession sesion, Model modelo) {
             Usuario usuario = (Usuario) sesion.getAttribute("usuario");
@@ -73,7 +72,6 @@ public class PerfilController {
             }
 
             Perfil nuevoPerfil = usuarioFormulario.getPerfil();
-
             nuevoPerfil.setUsuario(usuario);
 
             perfilService.crearPerfil(nuevoPerfil);
@@ -91,13 +89,12 @@ public class PerfilController {
             if (usuarioSesion == null) return "redirect:/login";
 
             if (usuarioSesion.getPerfil() == null) {
-                  return "redirect:/user/profile/create"; // redirigir si aún no tiene perfil
+                  return "redirect:/user/profile/create";
             }
 
             Perfil perfilExistente = usuarioSesion.getPerfil();
             Perfil datosForm = usuarioForm.getPerfil();
 
-            // Validación y actualización campo a campo
             if (datosForm.getNif() != null && !datosForm.getNif().isBlank()) {
                   perfilExistente.setNif(datosForm.getNif());
             }
@@ -142,7 +139,7 @@ public class PerfilController {
                         perfilService.eliminarPerfilDeUsuario(usuario.getId());
 
                         usuario = usuarioService.encontrarUsuario(usuario.getId());
-                        session.setAttribute("usuario", usuario); // Guarda los cambios en sesión
+                        session.setAttribute("usuario", usuario); // Guardo los cambios en la sesión iniciada
                   } catch (DAOException e) {
                         modelo.addAttribute("error", "Error al eliminar el perfil: " + e.getMessage());
                         return "error";                  }

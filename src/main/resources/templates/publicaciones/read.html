@@ -14,48 +14,47 @@
         <p th:text="${error}">Error al visualizar la publicación</p>
     </div>
 
-    <!-- Formulario de edición -->
     <form th:action="@{'/publicaciones/read/' + ${publicacion.id}}" th:object="${publicacion}">
         <div class="mb-4">
             <label class="block text-gray-700">Título</label>
-            <input disabled type="text" th:field="*{titulo}" class="w-full border px-3 py-2 rounded-lg" required>
+            <input disabled type="text" th:field="*{titulo}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">Descripción</label>
-            <textarea disabled th:field="*{descripcion}" class="w-full border px-3 py-2 rounded-lg" required></textarea>
+            <textarea disabled th:field="*{descripcion}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700"></textarea>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">Precio (€)</label>
-            <input disabled type="number" th:field="*{precio}" min="0" class="w-full border px-3 py-2 rounded-lg" required>
+            <input disabled th:field="*{precio}" min="0" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
         </div>
 
         <div th:if="${publicacion.getClass().simpleName == 'Bien'}">
             <div class="mb-4">
                 <label class="block text-gray-700">Estado</label>
-                <input disabled type="text" th:field="*{estado}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled type="text" th:field="*{estado}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Ancho (cm)</label>
-                <input disabled type="number" step="0.01" th:field="*{ancho}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled th:field="*{ancho}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Alto (cm)</label>
-                <input disabled type="number" step="0.01" th:field="*{alto}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled th:field="*{alto}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Profundidad (cm)</label>
-                <input disabled type="number" step="0.01" th:field="*{profundidad}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled step="0.01" th:field="*{profundidad}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
         </div>
 
         <div th:if="${publicacion.getClass().simpleName == 'Servicio'}">
             <div class="mb-4">
                 <label class="block text-gray-700">Horas</label>
-                <input disabled type="number" th:field="*{horas}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled th:field="*{horas}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700">Minutos</label>
-                <input disabled type="number" th:field="*{minutos}" class="w-full border px-3 py-2 rounded-lg">
+                <input disabled th:field="*{minutos}" class="w-full border px-3 py-2 rounded-lg bg-gray-100 text-gray-700">
             </div>
         </div>
 

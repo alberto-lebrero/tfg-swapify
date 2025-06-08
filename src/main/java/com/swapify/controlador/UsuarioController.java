@@ -1,6 +1,5 @@
 package com.swapify.controlador;
 
-import com.swapify.modelo.Perfil;
 import com.swapify.modelo.Usuario;
 import com.swapify.persistencia.DAOException;
 import com.swapify.servicio.UsuarioService;
