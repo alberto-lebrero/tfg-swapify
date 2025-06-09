@@ -24,8 +24,10 @@
                         <div class="mt-auto">
                             <div class="text-right text-lg font-semibold text-indigo-600 mb-1"
                                  th:if="${publicacion.precio != null}" th:text="${publicacion.precio} + ' €'"></div>
-                            <span th:text="${publicacion.usuario != null && publicacion.usuario.perfil != null ? publicacion.usuario.perfil.nombre + ' ' + publicacion.usuario.perfil.apellidos : 'Anónimo'}"
-                                  class="text-right text-sm text-gray-500 mb-1"></span>
+                            <span th:text="${publicacion.usuario != null && publicacion.usuario.perfil != null ? publicacion.usuario.perfil.nombre : 'Anónimo'}"
+                                  class="text-right text-sm text-gray-500 mb-1">
+                                <span th:if="${publicacion.usuario.perfil.primerApellido != null && publicacion.usuario.perfil.segundoApellido != null}" th:text="+ ' ' + publicacion.usuario.perfil.primerApellido + ' ' + publicacion.usuario.perfil.segundoApellido"></span>
+                            </span>
 
 
                             <span th:if="${publicacion.fecha != null}"
