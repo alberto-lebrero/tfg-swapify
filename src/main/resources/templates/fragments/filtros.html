@@ -3,10 +3,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between px-6 gap-4">
 
         <div class="flex items-center gap-4">
-            <form th:action="@{/publicaciones/home}" method="get">
+            <form th:action="@{/publicaciones}" method="get" oninput="if (this.titulo.value.trim() === '') this.submit()">
                 <div class="relative flex items-center mt-1">
                     <span class="material-icons absolute left-3 text-gray-400 pointer-events-none">search</span>
-                    <input type="text" placeholder="Buscar publicaciones..." name="titulo"
+                    <input type="text" placeholder="Buscar publicaciones..." name="titulo" th:value="${titulo}"
                            class="w-full border border-gray-300 rounded pl-10 pr-4 py-2 focus:outline-none focus:ring-2-indigo-500"/>
                     <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-r hover:bg-indigo-700">Buscar</button>
                 </div>

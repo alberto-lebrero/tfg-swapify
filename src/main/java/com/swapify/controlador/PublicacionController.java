@@ -29,6 +29,7 @@ public class PublicacionController {
             List<Publicacion> publicaciones = publicacionService.buscarPublicaciones(titulo);
             modelo.addAttribute("publicaciones", publicaciones);
             modelo.addAttribute("usuario", usuario);
+            modelo.addAttribute("titulo", titulo);
             return "publicaciones/list";
       }
 
