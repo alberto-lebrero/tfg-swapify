@@ -16,7 +16,7 @@
                         <span class="material-icons text-4xl">account_circle</span>
                         <div>
                             <p class="font-semibold text-gray-800"
-                               th:text="${usuario.perfil != null} ? ${usuario.perfil.nombre + ' ' + usuario.perfil.primerApellido + ' ' + usuario.perfil.segundoApellido}">
+                               th:text="${usuario.perfil != null} ? ${usuario.perfil.nombre}">
                             </p>
                             <p class="text-sm text-gray-500"
                                th:text="${usuario.email != null} ? ${usuario.email}">
