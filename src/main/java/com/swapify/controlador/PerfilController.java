@@ -30,11 +30,12 @@ public class PerfilController {
 
             try {
                   Perfil perfil = perfilService.encontrarPerfilDeUsuario(usuario.getId());
-                  modelo.addAttribute("usuario", usuario);
                   if (perfil == null) {
                         return "redirect:/user/profile/create";
                   }
-                  modelo.addAttribute("perfil", usuario.getPerfil());
+
+                  modelo.addAttribute("usuario", usuario);
+                  modelo.addAttribute("perfil", perfil);
                   return "user/profile/read";
             } catch (DAOException e) {
                   modelo.addAttribute("error", "No se pudo cargar el perfil del usuario");
